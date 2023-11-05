@@ -6,13 +6,14 @@ class MyTripPage extends ConsumerWidget {
   const MyTripPage({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final tripList = ref.watch(tripListNotifierProvider);
 
-
-    return ListView.builder(itemBuilder: (context, index){
-      final trip = tripList[index];
-      return Text(trip.title);
-    });
+    return ListView.builder(
+        itemCount: tripList.length,
+        itemBuilder: (context, index) {
+          final trip = tripList[index];
+          return Text(trip.title);
+        });
   }
 }

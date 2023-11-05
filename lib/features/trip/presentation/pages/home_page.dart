@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:travel_app/features/trip/presentation/pages/addtrip_page.dart';
 import 'package:travel_app/features/trip/presentation/pages/mytrip_page.dart';
 
 class HomePage extends ConsumerWidget {
@@ -21,9 +22,9 @@ class HomePage extends ConsumerWidget {
       ),),
       body: PageView(
         controller: _pageController,
-        children: const [
+        children: [
           MyTripPage(),
-          Text("2"),
+          AddTripPage(),
           Text("3"),
         ],
       ),

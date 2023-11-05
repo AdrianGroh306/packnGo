@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:travel_app/features/trip/data/datasources/trip_local_datasource.dart';
@@ -63,6 +65,7 @@ class TripListNotifier extends StateNotifier<List<Trip>> {
   }
 
   Future<void> loadTrips() async{
-    await _getTrips();
+    final tripsOrFailure = await _getTrips();
+    tripsOrFailure.fold((error) => state = [], (trips) => state  = trips);
   }
 }
