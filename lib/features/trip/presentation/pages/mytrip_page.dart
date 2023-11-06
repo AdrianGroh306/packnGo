@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:travel_app/features/trip/presentation/providers/trip_provider.dart';
+import 'package:travel_app/features/trip/presentation/widgets/custome_search_bar.dart';
+import 'package:travel_app/features/trip/presentation/widgets/travel_card.dart';
 
 class MyTripPage extends ConsumerWidget {
   const MyTripPage({super.key});
@@ -9,11 +12,32 @@ class MyTripPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tripList = ref.watch(tripListNotifierProvider);
 
-    return ListView.builder(
-        itemCount: tripList.length,
-        itemBuilder: (context, index) {
-          final trip = tripList[index];
-          return Text(trip.title);
-        });
+    return SingleChildScrollView(
+      physics: const ScrollPhysics(),
+      child: Column(
+        children: [
+          CustomSearchBar(),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: tripList.length,
+            itemBuilder: (context, index) {
+              final trip = tripList[index];
+              return TravelCard(
+                imageUrl: trip.photos[0],
+                title: trip.title,
+                description: trip.description,
+                date: DateFormat.yMMMEd().format(trip.date).toString(),
+                location: trip.location,
+                onDelete: () {
+                  ref.read(tripListNotifierProvider.notifier).removeTrip(index);
+                  ref.read(tripListNotifierProvider.notifier).loadTrips();
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

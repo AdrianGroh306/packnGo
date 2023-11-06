@@ -1,5 +1,4 @@
-import 'dart:html';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:travel_app/features/trip/data/datasources/trip_local_datasource.dart';
@@ -30,7 +29,7 @@ final addTripsProvider = Provider<AddTrips>((ref) {
 // get Provider
 final getTripsProvider = Provider<GetTrips>((ref) {
   final repository = ref.read(tripRepositoryProvider);
-  return GetTrips(repository: repository);
+  return GetTrips(repository);
 });
 
 // delete Provider
